@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--
+    <parameters>
+        <parameter key="paco_followable.example.class">Paco\Bundle\FollowableBundle\Example</parameter>
+    </parameters>
+
+    <services>
+        <service id="paco_followable.example" class="%paco_followable.example.class%">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+    <parameters>
+        <parameter key="paco_followable.listener.class">Paco\Bundle\FollowableBundle\EventListener\FollowableBehaviorListener</parameter>
+        <parameter key="paco_followable.followable_id_attribute_name" type="string" />
+        <parameter key="paco_followable.joint_table_name" type="string" />
+        <parameter key="paco_followable.joint_table_follower_column_name" type="string" />
+        <parameter key="paco_followable.joint_table_followee_column_name" type="string" />
+    </parameters>
+    <services>
+        <service id="paco_followable.listener" class="%paco_followable.listener.class%">
+            <tag name="doctrine.event_subscriber"/>
+            <argument>%paco_followable.followable_id_attribute_name%</argument>
+            <argument>%paco_followable.joint_table_name%</argument>
+            <argument>%paco_followable.joint_table_follower_column_name%</argument>
+            <argument>%paco_followable.joint_table_followee_column_name%</argument>
+        </service>
+    </services>
+    
+</container>
