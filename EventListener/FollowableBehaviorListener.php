@@ -25,7 +25,7 @@ class FollowableBehaviorListener implements EventSubscriber
 	{
 		return array(
             Events::loadClassMetadata,
-        );
+            );
 	}
 
 	/**
@@ -37,20 +37,19 @@ class FollowableBehaviorListener implements EventSubscriber
         $metadata = $eventArgs->getClassMetadata();
 
         if(!(in_array('Paco\Bundle\FollowableBundle\Behaviors\FollowableBehaviorInterface', class_implements($metadata->getName())))){
-            die(var_dump(class_implements($metadata->getName())));
             return;
         }
 
         $namingStrategy = $eventArgs
-            ->getEntityManager()
-            ->getConfiguration()
-            ->getNamingStrategy();
+        ->getEntityManager()
+        ->getConfiguration()
+        ->getNamingStrategy();
 
         $metadata->mapManyToMany(array(
             'targetEntity'  => $metadata->getName(),
             'fieldName'     => 'followees',
             'mappedBy'       => 'followers'
-        ));    
+            ));    
 
         $metadata->mapManyToMany(array(
             'targetEntity'  => $metadata->getName(),
@@ -63,15 +62,15 @@ class FollowableBehaviorListener implements EventSubscriber
                     array(
                         'name'                  => $this->refFollowerIdColumnName,
                         'referencedColumnName'  => $this->followableIdAttributeName
+                        ),
                     ),
-                ),
                 'inverseJoinColumns'    => array(
                     array(
                         'name'                  => $this->refFolloweeIdColumnName,
                         'referencedColumnName'  => $this->followableIdAttributeName
-                    ),
+                        ),
+                    )
                 )
-            )
-        ));
+            ));
     }
 }
